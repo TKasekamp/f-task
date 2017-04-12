@@ -1,6 +1,6 @@
 package ee.tkasekamp.ftask.service;
 
-import ee.tkasekamp.ftask.dto.RentOutputDTO;
+import ee.tkasekamp.ftask.dto.rent.RentOutputDTO;
 import ee.tkasekamp.ftask.model.Film;
 import ee.tkasekamp.ftask.model.FilmType;
 

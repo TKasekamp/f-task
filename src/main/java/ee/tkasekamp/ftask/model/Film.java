@@ -7,16 +7,26 @@ public class Film {
     private int ID;
     private String name;
     private FilmType type;
+    private boolean available;
 
     public Film(int ID, String name, FilmType type) {
         this.name = name;
         this.type = type;
         this.ID = ID;
+        this.available = true;
 
     }
 
     public int getID() {
         return ID;
+    }
+
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
     }
 
     public String getName() {
