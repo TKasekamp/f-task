@@ -9,7 +9,6 @@ import org.junit.Test;
 /**
  * Created by Tõnis Kasekamp on 12.04.2017.
  */
-
 public class RentServiceTest {
 
     RentService rentService;
@@ -44,6 +43,23 @@ public class RentServiceTest {
         Assert.assertEquals(6, price3);
 
         int price4 = rentService.calculatePrice(film, 6);
+        Assert.assertEquals(12, price4);
+    }
+
+    @Test
+    public void calculatesOldFilmPrice() {
+        Film film = new Film(1, "Rogue One", FilmType.OLD);
+
+        int price1 = rentService.calculatePrice(film, 1);
+        Assert.assertEquals(3, price1);
+
+        int price2 = rentService.calculatePrice(film, 5);
+        Assert.assertEquals(3, price2);
+
+        int price3 = rentService.calculatePrice(film, 6);
+        Assert.assertEquals(6, price3);
+
+        int price4 = rentService.calculatePrice(film, 8);
         Assert.assertEquals(12, price4);
     }
 }
