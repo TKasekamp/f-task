@@ -30,9 +30,10 @@ public class RentService {
                 price = PREMIUM_PRICE * days;
                 break;
             case REGULAR:
-                price = calculateBasicPrice(days);
+                price = calculateRegularPrice(days);
                 break;
             case OLD:
+                price = calculateOldPrice(days);
                 break;
 
         }
@@ -40,10 +41,22 @@ public class RentService {
 
     }
 
-    private int calculateBasicPrice(int days) {
+    private int calculateRegularPrice(int days) {
         int price = BASIC_PRICE;
 
         int overDays = days - REGULAR_PRICE_DAYS;
+
+        if (overDays > 0) {
+            price += overDays * BASIC_PRICE;
+        }
+
+        return price;
+    }
+
+    private int calculateOldPrice(int days) {
+        int price = BASIC_PRICE;
+
+        int overDays = days - OLD_PRICE_DAYS;
 
         if (overDays > 0) {
             price += overDays * BASIC_PRICE;
