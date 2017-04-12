@@ -26,8 +26,6 @@ public class RentService {
     public final int NEW_RELEASE_BONUS_POINTS = 2;
     public final int OTHER_BONUS_POINTS = 1;
 
-    public final int NEW_RELESE_BONUS_COST = 25;
-
     private CostumerService costumerService;
     private FilmService filmService;
     private List<Rent> rents;
