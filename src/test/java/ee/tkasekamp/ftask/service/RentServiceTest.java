@@ -62,9 +62,6 @@ public class RentServiceTest {
         // Check bonus points
         Assert.assertEquals(3, costumerService.getBonusPoints(0));
 
-        // Check rents created
-        Assert.assertEquals(2, Repository.rents.size());
-//        Assert.assertEquals(1, Repository.rents.get(0));
     }
 
     @Test

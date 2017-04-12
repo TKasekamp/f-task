@@ -6,7 +6,6 @@ import ee.tkasekamp.ftask.dto.rent.CreateRentDTO;
 import ee.tkasekamp.ftask.dto.rent.RentItemDTO;
 import ee.tkasekamp.ftask.model.Film;
 import ee.tkasekamp.ftask.model.FilmType;
-import ee.tkasekamp.ftask.model.Rent;
 import ee.tkasekamp.ftask.repository.Repository;
 
 import java.time.LocalDate;
@@ -28,12 +27,10 @@ public class RentService {
 
     private CostumerService costumerService;
     private FilmService filmService;
-    private List<Rent> rents;
 
     public RentService() {
         costumerService = new CostumerService();
         filmService = new FilmService();
-        this.rents = Repository.rents;
     }
 
     public ReceiptDTO rentFilms(CreateRentDTO dto) {
@@ -62,9 +59,6 @@ public class RentService {
         int price = calculatePrice(film, days);
 
         boolean bonus = checkBonusAvailability(costumerID, film.getType());
-        Rent rent = new Rent(dto.getFilmID(),costumerID,  dto.getStartDate(), dto.getEndDate(), price, bonus);
-
-        rents.add(rent);
 
         return new ReceiptItemDTO(film, days, price, bonus);
     }
