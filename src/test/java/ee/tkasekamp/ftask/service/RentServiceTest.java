@@ -64,7 +64,34 @@ public class RentServiceTest {
 
         // Check rents created
         Assert.assertEquals(2, Repository.rents.size());
-//        Assert.assertEquals(1, Repository.rents.get(0));
+    }
+
+
+    @Test
+    public void rentWithBonus() {
+        RentItemDTO r1 = new RentItemDTO(0, LocalDate.of(2017, 4, 12), LocalDate.of(2017, 4, 15), false);
+        RentItemDTO r2 = new RentItemDTO(1, LocalDate.of(2017, 4, 12), LocalDate.of(2017, 4, 15), true);
+
+        CreateRentDTO createRentDTO = new CreateRentDTO(0, Arrays.asList(r1, r2));
+
+        costumerService.addPoints(0, 25);
+
+        ReceiptDTO receiptDTO = rentService.rentFilms(createRentDTO);
+
+        // Check output DTO
+        Assert.assertTrue(receiptDTO.isUsedBonus());
+        Assert.assertEquals(11, receiptDTO.getTotal());
+        Assert.assertEquals(3, receiptDTO.getBonusPointsRemaining());
+        Assert.assertEquals(2, receiptDTO.getItems().size());
+
+        // Check film availability
+        Assert.assertEquals(3, filmService.getAvailableFilms().size());
+
+        // Check bonus points
+        Assert.assertEquals(3, costumerService.getBonusPoints(0));
+
+        // Check rents created
+        Assert.assertEquals(2, Repository.rents.size());
     }
 
     @Test

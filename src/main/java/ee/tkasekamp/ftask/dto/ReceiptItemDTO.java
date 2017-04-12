@@ -22,7 +22,7 @@ public class ReceiptItemDTO {
         this.filmType = film.getType().toString();
         this.days = days;
         this.price = price;
-        this.usedBonus = false;
+        this.usedBonus = usedBonus;
     }
 
     public String getFilmName() {

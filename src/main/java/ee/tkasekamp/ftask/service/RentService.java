@@ -26,6 +26,8 @@ public class RentService {
     public final int NEW_RELEASE_BONUS_POINTS = 2;
     public final int OTHER_BONUS_POINTS = 1;
 
+    public final int NEW_RELESE_BONUS_COST = 25;
+
     private CostumerService costumerService;
     private FilmService filmService;
     private List<Rent> rents;
@@ -59,14 +61,17 @@ public class RentService {
 
 
         int days = dateDifference(dto.getStartDate(), dto.getEndDate());
+        if(dto.isPayWithBonus())
+            days = payWithBonus(costumerID, days);
+
+
         int price = calculatePrice(film, days);
 
-        boolean bonus = checkBonusAvailability(costumerID, film.getType());
-        Rent rent = new Rent(dto.getFilmID(),costumerID,  dto.getStartDate(), dto.getEndDate(), price, bonus);
+        Rent rent = new Rent(dto.getFilmID(),costumerID,  dto.getStartDate(), dto.getEndDate(), price, dto.isPayWithBonus());
 
         rents.add(rent);
 
-        return new ReceiptItemDTO(film, days, price, bonus);
+        return new ReceiptItemDTO(film, days, price, dto.isPayWithBonus());
     }
 
     public boolean checkBonusAvailability(int costumerID, FilmType type) {
@@ -79,6 +84,17 @@ public class RentService {
         } else {
             costumerService.addPoints(costumerID, OTHER_BONUS_POINTS);
         }
+    }
+
+    private int payWithBonus(int costumerId, int days) {
+        int bonusPoints = costumerService.getBonusPoints(costumerId);
+        int daysCoveredByBonus = bonusPoints / NEW_RELESE_BONUS_COST;
+
+        costumerService.removePoints(costumerId, daysCoveredByBonus * NEW_RELESE_BONUS_COST);
+
+        days -= daysCoveredByBonus;
+
+        return days;
     }
 
     public int calculatePrice(Film film, int days) {
