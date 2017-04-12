@@ -1,15 +1,15 @@
 package ee.tkasekamp.ftask.service;
 
 import ee.tkasekamp.ftask.model.Customer;
+import ee.tkasekamp.ftask.repository.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CostumerService {
     List<Customer> customers;
 
     public CostumerService() {
-        this.customers = new ArrayList<>();
+        this.customers = Repository.customers;
     }
 
     public List<Customer> getCustomers() {

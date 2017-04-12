@@ -2,16 +2,16 @@ package ee.tkasekamp.ftask.service;
 
 import ee.tkasekamp.ftask.model.Film;
 import ee.tkasekamp.ftask.model.FilmType;
+import ee.tkasekamp.ftask.repository.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class FilmService {
-    List<Film> films;
+    private List<Film> films;
 
     public FilmService() {
-        films = new ArrayList<>();
+        films = Repository.films;
     }
 
     public List<Film> getFilms() {

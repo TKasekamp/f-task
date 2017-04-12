@@ -1,6 +1,8 @@
 package ee.tkasekamp.ftask.service;
 
-import ee.tkasekamp.ftask.dto.rent.RentOutputDTO;
+import ee.tkasekamp.ftask.dto.ReceiptDTO;
+import ee.tkasekamp.ftask.dto.ReceiptItemDTO;
+import ee.tkasekamp.ftask.dto.rent.CreateRentDTO;
 import ee.tkasekamp.ftask.model.Film;
 import ee.tkasekamp.ftask.model.FilmType;
 
@@ -8,16 +10,17 @@ import java.time.LocalDate;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
-/**
- * Created by Tõnis Kasekamp on 12.04.2017.
- */
 public class RentService {
     public final int BASIC_PRICE = 3;
     public final int PREMIUM_PRICE = 4;
     public final int REGULAR_PRICE_DAYS = 3;
     public final int OLD_PRICE_DAYS = 5;
 
-    public RentOutputDTO rentFilm(int costumerID, int filmID, LocalDate startDate, LocalDate endDate) {
+    public ReceiptDTO rentFilms(CreateRentDTO dto) {
+        return null;
+    }
+
+    public ReceiptItemDTO rentFilm(int costumerID, int filmID, LocalDate startDate, LocalDate endDate) {
         long days = dateDifference(startDate, endDate);
         return null;
     }
