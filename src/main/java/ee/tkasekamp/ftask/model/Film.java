@@ -11,4 +11,20 @@ public class Film {
         this.name = name;
         this.type = type;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public FilmType getType() {
+        return type;
+    }
+
+    public void setType(FilmType type) {
+        this.type = type;
+    }
 }
