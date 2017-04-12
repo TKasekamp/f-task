@@ -2,6 +2,8 @@ package ee.tkasekamp.ftask.service;
 
 import ee.tkasekamp.ftask.model.Film;
 import ee.tkasekamp.ftask.model.FilmType;
+import ee.tkasekamp.ftask.repository.Repository;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,7 +25,14 @@ public class FilmServiceTest {
         films.add(new Film(2, "Film 2", FilmType.OLD));
         films.add(new Film(3, "Film 3", FilmType.REGULAR));
         films.add(new Film(4, "Film 4", FilmType.REGULAR));
-        filmService.setFilms(films);
+        Repository.films.addAll(films);
+    }
+
+    @After
+    public void tearDown() {
+        Repository.customers.clear();
+        Repository.films.clear();
+        Repository.rents.clear();
     }
 
     @Test

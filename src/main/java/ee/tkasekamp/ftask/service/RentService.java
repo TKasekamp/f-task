@@ -17,6 +17,7 @@ import static java.lang.Math.toIntExact;
 import static java.time.temporal.ChronoUnit.DAYS;
 
 public class RentService {
+    private static final int NEW_RELEASE_BONUS_COST = 25;
     public final int BASIC_PRICE = 3;
     public final int PREMIUM_PRICE = 4;
 
@@ -86,9 +87,9 @@ public class RentService {
 
     private int payWithBonus(int costumerId, int days) {
         int bonusPoints = costumerService.getBonusPoints(costumerId);
-        int daysCoveredByBonus = bonusPoints / NEW_RELESE_BONUS_COST;
+        int daysCoveredByBonus = bonusPoints / NEW_RELEASE_BONUS_COST;
 
-        costumerService.removePoints(costumerId, daysCoveredByBonus * NEW_RELESE_BONUS_COST);
+        costumerService.removePoints(costumerId, daysCoveredByBonus * NEW_RELEASE_BONUS_COST);
 
         days -= daysCoveredByBonus;
 

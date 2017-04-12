@@ -7,6 +7,7 @@ import ee.tkasekamp.ftask.model.Customer;
 import ee.tkasekamp.ftask.model.Film;
 import ee.tkasekamp.ftask.model.FilmType;
 import ee.tkasekamp.ftask.repository.Repository;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -39,6 +40,13 @@ public class RentServiceTest {
 
         Customer c = new Customer(0);
         Repository.customers.add(c);
+    }
+
+    @After
+    public void tearDown() {
+        Repository.customers.clear();
+        Repository.films.clear();
+        Repository.rents.clear();
     }
 
     @Test
