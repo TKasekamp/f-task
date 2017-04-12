@@ -16,8 +16,8 @@ public class CostumerService {
         return customers;
     }
 
-    public void setCustomers(List<Customer> customers) {
-        this.customers = customers;
+    public int getBonusPoints(int id) {
+        return getCustomer(id).getBonusPoints();
     }
 
     public Customer getCustomer(int id) {

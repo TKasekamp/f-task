@@ -35,10 +35,10 @@ public class RentServiceTest {
         films.add(new Film(2, "Film 2", FilmType.OLD));
         films.add(new Film(3, "Film 3", FilmType.REGULAR));
         films.add(new Film(4, "Film 4", FilmType.REGULAR));
-        Repository.films = films;
+        Repository.films.addAll(films);
 
         Customer c = new Customer(0);
-        Repository.customers = Arrays.asList(c);
+        Repository.customers.add(c);
     }
 
     @Test
@@ -52,12 +52,15 @@ public class RentServiceTest {
 
         // Check output DTO
         Assert.assertFalse(receiptDTO.isUsedBonus());
-        Assert.assertEquals(12, receiptDTO.getTotal());
-        Assert.assertEquals(0, receiptDTO.getBonusPointsRemaining());
+        Assert.assertEquals(15, receiptDTO.getTotal());
+        Assert.assertEquals(3, receiptDTO.getBonusPointsRemaining());
         Assert.assertEquals(2, receiptDTO.getItems().size());
 
         // Check film availability
         Assert.assertEquals(3, filmService.getAvailableFilms().size());
+
+        // Check bonus points
+        Assert.assertEquals(3, costumerService.getBonusPoints(0));
 
         // Check rents created
         Assert.assertEquals(2, Repository.rents.size());

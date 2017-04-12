@@ -3,19 +3,19 @@ package ee.tkasekamp.ftask.dto;
 import java.util.List;
 
 public class ReceiptDTO {
-    private int total;
+    private long total;
     private boolean usedBonus;
     private int bonusPointsRemaining;
     private List<ReceiptItemDTO> items;
 
-    public ReceiptDTO(int total, boolean usedBonus, int bonusPointsRemaining, List<ReceiptItemDTO> items) {
+    public ReceiptDTO(long total, boolean usedBonus, int bonusPointsRemaining, List<ReceiptItemDTO> items) {
         this.total = total;
         this.usedBonus = usedBonus;
         this.bonusPointsRemaining = bonusPointsRemaining;
         this.items = items;
     }
 
-    public int getTotal() {
+    public long getTotal() {
         return total;
     }
 
