@@ -1,4 +1,4 @@
-package ee.tkasekamp.ftask.dto;
+package ee.tkasekamp.ftask.dto.returning;
 
 import java.util.List;
 
