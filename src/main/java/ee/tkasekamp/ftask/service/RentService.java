@@ -12,8 +12,8 @@ import ee.tkasekamp.ftask.repository.Repository;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import static java.lang.Math.toIntExact;
 
+import static java.lang.Math.toIntExact;
 import static java.time.temporal.ChronoUnit.DAYS;
 
 public class RentService {
@@ -60,22 +60,19 @@ public class RentService {
 
 
         int days = dateDifference(dto.getStartDate(), dto.getEndDate());
-        if(dto.isPayWithBonus())
+        if (dto.isPayWithBonus())
             days = payWithBonus(costumerID, days);
 
 
         int price = calculatePrice(film, days);
 
-        Rent rent = new Rent(dto.getFilmID(),costumerID,  dto.getStartDate(), dto.getEndDate(), price, dto.isPayWithBonus());
+        Rent rent = new Rent(dto.getFilmID(), costumerID, dto.getStartDate(), dto.getEndDate(), price, dto.isPayWithBonus());
 
         rents.add(rent);
 
         return new ReceiptItemDTO(film, days, price, dto.isPayWithBonus());
     }
 
-    public boolean checkBonusAvailability(int costumerID, FilmType type) {
-        return false;
-    }
 
     private void addBonusPoints(int costumerID, FilmType type) {
         if (type == FilmType.NEW_RELEASE) {
