@@ -2,20 +2,23 @@ package ee.tkasekamp.ftask.model;
 
 import java.time.LocalDate;
 
+/**
+ * There could be more data here, but filmID and endDate are the most important.
+ */
 public class Rent {
     private int filmID;
-    private int costumerID;
-    private LocalDate startDate;
     private LocalDate endDate;
-    private int price;
-    private boolean usedBonus;
 
-    public Rent(int filmID, int costumerID, LocalDate startDate, LocalDate endDate, int price, boolean usedBonus) {
+    public Rent(int filmID, LocalDate endDate) {
         this.filmID = filmID;
-        this.costumerID = costumerID;
-        this.startDate = startDate;
         this.endDate = endDate;
-        this.price = price;
-        this.usedBonus = usedBonus;
+    }
+
+    public int getFilmID() {
+        return filmID;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
     }
 }

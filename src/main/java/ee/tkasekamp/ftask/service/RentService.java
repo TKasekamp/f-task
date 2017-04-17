@@ -73,6 +73,10 @@ public class RentService {
         return new ReceiptItemDTO(film, days, price, dto.isPayWithBonus());
     }
 
+    public Rent getRent(int filmID) {
+        return rents.stream().filter(x -> filmID == x.getFilmID()).findFirst().get();
+    }
+
 
     private void addBonusPoints(int costumerID, FilmType type) {
         if (type == FilmType.NEW_RELEASE) {
@@ -136,7 +140,7 @@ public class RentService {
         return price;
     }
 
-    private int dateDifference(LocalDate startDate, LocalDate endDate) {
+    public int dateDifference(LocalDate startDate, LocalDate endDate) {
         return toIntExact(DAYS.between(startDate, endDate));
     }
 }

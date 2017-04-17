@@ -1,13 +1,11 @@
 package ee.tkasekamp.ftask.service;
 
-import ee.tkasekamp.ftask.dto.rent.CreateRentDTO;
-import ee.tkasekamp.ftask.dto.rent.RentItemDTO;
 import ee.tkasekamp.ftask.dto.returning.ReturnDTO;
-import ee.tkasekamp.ftask.dto.returning.ReturnItemDTO;
 import ee.tkasekamp.ftask.dto.returning.ReturnReceiptDTO;
 import ee.tkasekamp.ftask.model.Customer;
 import ee.tkasekamp.ftask.model.Film;
 import ee.tkasekamp.ftask.model.FilmType;
+import ee.tkasekamp.ftask.model.Rent;
 import ee.tkasekamp.ftask.repository.Repository;
 import org.junit.After;
 import org.junit.Assert;
@@ -45,11 +43,12 @@ public class ReturnServiceTest {
         Customer c = new Customer(0);
         Repository.customers.add(c);
 
+        // Create rents
+        Repository.rents.add(new Rent(0, LocalDate.of(2017, 4, 15)));
+        filmService.setAvailable(0, false);
 
-        RentItemDTO r1 = new RentItemDTO(0, LocalDate.of(2017, 4, 12), LocalDate.of(2017, 4, 15), false);
-        RentItemDTO r2 = new RentItemDTO(1, LocalDate.of(2017, 4, 12), LocalDate.of(2017, 4, 15), false);
-        CreateRentDTO createRentDTO = new CreateRentDTO(0, Arrays.asList(r1, r2));
-        rentService.rentFilms(createRentDTO);
+        Repository.rents.add(new Rent(1, LocalDate.of(2017, 4, 15)));
+        filmService.setAvailable(1, false);
     }
 
     @After
@@ -61,33 +60,77 @@ public class ReturnServiceTest {
 
     @Test
     public void returnFilmsNormal() {
-        ReturnItemDTO r1 = new ReturnItemDTO(0, LocalDate.of(2017, 4, 15));
-        ReturnItemDTO r2 = new ReturnItemDTO(1, LocalDate.of(2017, 4, 15));
-
-        Arrays.asList(r1, r2);
-
-        ReturnDTO returnDTO = new ReturnDTO(0, Arrays.asList(r1, r2));
+        ReturnDTO returnDTO = new ReturnDTO(0, LocalDate.of(2017, 4, 15), Arrays.asList(0));
 
         ReturnReceiptDTO receiptDTO = returnService.returnFilms(returnDTO);
 
         // Check output DTO
         Assert.assertEquals(0, receiptDTO.getTotal());
-        Assert.assertEquals(2, receiptDTO.getItems().size());
+        Assert.assertEquals(1, receiptDTO.getItems().size());
 
         Assert.assertEquals(0, receiptDTO.getItems().get(0).getExtraDays());
         Assert.assertEquals(0, receiptDTO.getItems().get(0).getPrice());
 
-        Assert.assertEquals(0, receiptDTO.getItems().get(1).getExtraDays());
-        Assert.assertEquals(0, receiptDTO.getItems().get(1).getPrice());
-
         // Check film availability
-        Assert.assertEquals(5, filmService.getAvailableFilms().size());
+        Assert.assertEquals(4, filmService.getAvailableFilms().size());
 
-        // Check bonus points
-        Assert.assertEquals(3, costumerService.getBonusPoints(0));
-
-        // Check rents created
-        Assert.assertEquals(2, Repository.rents.size());
     }
 
+
+    @Test
+    public void returnFilmEarly() {
+
+        ReturnDTO returnDTO = new ReturnDTO(0, LocalDate.of(2017, 4, 14), Arrays.asList(0));
+
+        ReturnReceiptDTO receiptDTO = returnService.returnFilms(returnDTO);
+
+        // Check output DTO
+        Assert.assertEquals(0, receiptDTO.getTotal());
+        Assert.assertEquals(1, receiptDTO.getItems().size());
+
+        Assert.assertEquals(0, receiptDTO.getItems().get(0).getExtraDays());
+        Assert.assertEquals(0, receiptDTO.getItems().get(0).getPrice());
+
+        // Check film availability
+        Assert.assertEquals(4, filmService.getAvailableFilms().size());
+
+    }
+
+    @Test
+    public void returnFilmLateRegular() {
+
+        ReturnDTO returnDTO = new ReturnDTO(0, LocalDate.of(2017, 4, 16), Arrays.asList(0));
+
+        ReturnReceiptDTO receiptDTO = returnService.returnFilms(returnDTO);
+
+        // Check output DTO
+        Assert.assertEquals(3, receiptDTO.getTotal());
+        Assert.assertEquals(1, receiptDTO.getItems().size());
+
+        Assert.assertEquals(1, receiptDTO.getItems().get(0).getExtraDays());
+        Assert.assertEquals(3, receiptDTO.getItems().get(0).getPrice());
+
+        // Check film availability
+        Assert.assertEquals(4, filmService.getAvailableFilms().size());
+
+    }
+
+    @Test
+    public void returnFilmLateNewRelease() {
+
+        ReturnDTO returnDTO = new ReturnDTO(0, LocalDate.of(2017, 4, 17), Arrays.asList(1));
+
+        ReturnReceiptDTO receiptDTO = returnService.returnFilms(returnDTO);
+
+        // Check output DTO
+        Assert.assertEquals(8, receiptDTO.getTotal());
+        Assert.assertEquals(1, receiptDTO.getItems().size());
+
+        Assert.assertEquals(2, receiptDTO.getItems().get(0).getExtraDays());
+        Assert.assertEquals(8, receiptDTO.getItems().get(0).getPrice());
+
+        // Check film availability
+        Assert.assertEquals(4, filmService.getAvailableFilms().size());
+
+    }
 }

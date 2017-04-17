@@ -6,7 +6,7 @@ public class ReturnReceiptDTO {
     private long total;
     private List<ReturnReceiptItemDTO> items;
 
-    public ReturnReceiptDTO(long total,  List<ReturnReceiptItemDTO> items) {
+    public ReturnReceiptDTO(long total, List<ReturnReceiptItemDTO> items) {
         this.total = total;
         this.items = items;
     }
@@ -18,10 +18,5 @@ public class ReturnReceiptDTO {
     public List<ReturnReceiptItemDTO> getItems() {
         return items;
     }
-
-    public void setItems(List<ReturnReceiptItemDTO> items) {
-        this.items = items;
-    }
-
 
 }
