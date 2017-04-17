@@ -44,13 +44,10 @@ public class RentService {
         }
         // Calculate total
         long total = items.stream().mapToLong(ReceiptItemDTO::getPrice).sum();
-        // Calculate bonuses if needed.
-        boolean usedBonus = items.stream()
-                .anyMatch(t -> t.usedBonus());
 
         // Find remaining bonus points
         int bonusPointsRemaining = costumerService.getBonusPoints(dto.getCostumerID());
-        return new ReceiptDTO(total, usedBonus, bonusPointsRemaining, items);
+        return new ReceiptDTO(total, bonusPointsRemaining, items);
     }
 
     public ReceiptItemDTO rentFilm(int costumerID, RentItemDTO dto) {
@@ -58,19 +55,22 @@ public class RentService {
         filmService.setAvailable(dto.getFilmID(), false);
         addBonusPoints(costumerID, film.getType());
 
+        int payableDays = dateDifference(dto.getStartDate(), dto.getEndDate());
+        int bonusPointsUsed = 0;
 
-        int days = dateDifference(dto.getStartDate(), dto.getEndDate());
-        if (dto.isPayWithBonus())
-            days = payWithBonus(costumerID, days);
+        // If the costumer wants to use bonus points, change the day and bonus values
+        if (dto.isPayWithBonus()) {
+            BonusCoverage bonus = payWithBonus(costumerID, payableDays);
+            payableDays = bonus.getPayableDays();
+            bonusPointsUsed = bonus.getBonusPointsUsed();
+        }
 
+        int price = calculatePrice(film, payableDays);
 
-        int price = calculatePrice(film, days);
-
-        Rent rent = new Rent(dto.getFilmID(), costumerID, dto.getStartDate(), dto.getEndDate(), price, dto.isPayWithBonus());
-
+        Rent rent = new Rent(dto.getFilmID(), dto.getEndDate());
         rents.add(rent);
 
-        return new ReceiptItemDTO(film, days, price, dto.isPayWithBonus());
+        return new ReceiptItemDTO(film, payableDays, price, bonusPointsUsed);
     }
 
     public Rent getRent(int filmID) {
@@ -86,15 +86,14 @@ public class RentService {
         }
     }
 
-    private int payWithBonus(int costumerId, int days) {
+    private BonusCoverage payWithBonus(int costumerId, int days) {
         int bonusPoints = costumerService.getBonusPoints(costumerId);
         int daysCoveredByBonus = bonusPoints / NEW_RELEASE_BONUS_COST;
 
-        costumerService.removePoints(costumerId, daysCoveredByBonus * NEW_RELEASE_BONUS_COST);
+        int bonusPointsUsed = daysCoveredByBonus * NEW_RELEASE_BONUS_COST;
+        costumerService.removePoints(costumerId, bonusPointsUsed);
 
-        days -= daysCoveredByBonus;
-
-        return days;
+        return new BonusCoverage(bonusPointsUsed, days - daysCoveredByBonus);
     }
 
     public int calculatePrice(Film film, int days) {

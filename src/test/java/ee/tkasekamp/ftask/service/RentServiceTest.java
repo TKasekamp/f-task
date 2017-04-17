@@ -59,7 +59,6 @@ public class RentServiceTest {
         ReceiptDTO receiptDTO = rentService.rentFilms(createRentDTO);
 
         // Check output DTO
-        Assert.assertFalse(receiptDTO.isUsedBonus());
         Assert.assertEquals(15, receiptDTO.getTotal());
         Assert.assertEquals(3, receiptDTO.getBonusPointsRemaining());
         Assert.assertEquals(2, receiptDTO.getItems().size());
@@ -87,7 +86,6 @@ public class RentServiceTest {
         ReceiptDTO receiptDTO = rentService.rentFilms(createRentDTO);
 
         // Check output DTO
-        Assert.assertTrue(receiptDTO.isUsedBonus());
         Assert.assertEquals(11, receiptDTO.getTotal());
         Assert.assertEquals(3, receiptDTO.getBonusPointsRemaining());
         Assert.assertEquals(2, receiptDTO.getItems().size());

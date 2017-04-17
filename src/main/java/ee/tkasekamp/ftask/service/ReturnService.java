@@ -49,7 +49,7 @@ public class ReturnService {
 
         int extraDays = 0;
         int price = 0;
-        if (dateDifference >= 0) {
+        if (dateDifference > 0) {
             extraDays = dateDifference;
             price = rentService.calculatePrice(film, dateDifference);
         }
