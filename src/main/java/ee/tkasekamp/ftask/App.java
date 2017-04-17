@@ -2,6 +2,7 @@ package ee.tkasekamp.ftask;
 
 import ee.tkasekamp.ftask.dto.rent.CreateRentDTO;
 import ee.tkasekamp.ftask.dto.rent.RentItemDTO;
+import ee.tkasekamp.ftask.dto.returning.ReturnDTO;
 import ee.tkasekamp.ftask.model.Customer;
 import ee.tkasekamp.ftask.model.Film;
 import ee.tkasekamp.ftask.model.FilmType;
@@ -26,6 +27,9 @@ public class App {
         rentFilmsNormally();
 
         rentFilmsWithBonus();
+        returnFilmEarly();
+        returnFilmOnTime();
+        returnFilmLate();
 
     }
 
@@ -50,6 +54,37 @@ public class App {
         CreateRentDTO createRentDTO = new CreateRentDTO(0, Arrays.asList(r1));
 
         controller.rentFilms(createRentDTO);
+        System.out.println("----------");
+    }
+
+
+    private static void returnFilmEarly() {
+        System.out.println("RETURN FILM EARLY");
+        System.out.println("----------");
+
+        ReturnDTO returnDTO = new ReturnDTO(0, LocalDate.of(2017, 4, 14), Arrays.asList(0));
+
+        controller.returnFilms(returnDTO);
+        System.out.println("----------");
+    }
+
+    private static void returnFilmOnTime() {
+        System.out.println("RETURN FILM ON TIME");
+        System.out.println("----------");
+
+        ReturnDTO returnDTO = new ReturnDTO(0, LocalDate.of(2017, 4, 15), Arrays.asList(1));
+
+        controller.returnFilms(returnDTO);
+        System.out.println("----------");
+    }
+
+    private static void returnFilmLate() {
+        System.out.println("RETURN FILM LATE");
+        System.out.println("----------");
+
+        ReturnDTO returnDTO = new ReturnDTO(0, LocalDate.of(2017, 4, 17), Arrays.asList(4));
+
+        controller.returnFilms(returnDTO);
         System.out.println("----------");
     }
 

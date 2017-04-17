@@ -8,13 +8,6 @@ public class ReturnReceiptItemDTO {
     private int extraDays;
     private int price;
 
-    public ReturnReceiptItemDTO(String filmName, String filmType, int extraDays, int price) {
-        this.filmName = filmName;
-        this.filmType = filmType;
-        this.extraDays = extraDays;
-        this.price = price;
-    }
-
     public ReturnReceiptItemDTO(Film film, int extraDays, int price) {
         this.filmName = film.getName();
         this.filmType = film.getType().toString();
@@ -36,6 +29,15 @@ public class ReturnReceiptItemDTO {
 
     public int getPrice() {
         return price;
+    }
+
+    @Override
+    public String toString() {
+        if (extraDays != 0) {
+            return String.format("%s (%s) %d extra days, late charge %d EUR", filmName, filmType, extraDays, price);
+        } else {
+            return String.format("%s (%s)", filmName, filmType);
+        }
     }
 
 }
