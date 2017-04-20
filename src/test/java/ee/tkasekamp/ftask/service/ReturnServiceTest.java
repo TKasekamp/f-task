@@ -60,7 +60,7 @@ public class ReturnServiceTest {
 
     @Test
     public void returnFilmsNormal() {
-        ReturnDTO returnDTO = new ReturnDTO(0, LocalDate.of(2017, 4, 15), Arrays.asList(0));
+        ReturnDTO returnDTO = new ReturnDTO(LocalDate.of(2017, 4, 15), Arrays.asList(0));
 
         ReturnReceiptDTO receiptDTO = returnService.returnFilms(returnDTO);
 
@@ -80,7 +80,7 @@ public class ReturnServiceTest {
     @Test
     public void returnFilmEarly() {
 
-        ReturnDTO returnDTO = new ReturnDTO(0, LocalDate.of(2017, 4, 14), Arrays.asList(0));
+        ReturnDTO returnDTO = new ReturnDTO(LocalDate.of(2017, 4, 14), Arrays.asList(0));
 
         ReturnReceiptDTO receiptDTO = returnService.returnFilms(returnDTO);
 
@@ -99,7 +99,7 @@ public class ReturnServiceTest {
     @Test
     public void returnFilmLateRegular() {
 
-        ReturnDTO returnDTO = new ReturnDTO(0, LocalDate.of(2017, 4, 16), Arrays.asList(0));
+        ReturnDTO returnDTO = new ReturnDTO(LocalDate.of(2017, 4, 16), Arrays.asList(0));
 
         ReturnReceiptDTO receiptDTO = returnService.returnFilms(returnDTO);
 
@@ -118,7 +118,7 @@ public class ReturnServiceTest {
     @Test
     public void returnFilmLateNewRelease() {
 
-        ReturnDTO returnDTO = new ReturnDTO(0, LocalDate.of(2017, 4, 17), Arrays.asList(1));
+        ReturnDTO returnDTO = new ReturnDTO(LocalDate.of(2017, 4, 17), Arrays.asList(1));
 
         ReturnReceiptDTO receiptDTO = returnService.returnFilms(returnDTO);
 

@@ -4,18 +4,12 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class ReturnDTO {
-    private int costumerID;
     private LocalDate date;
     private List<Integer> items;
 
-    public ReturnDTO(int costumerID, LocalDate date, List<Integer> items) {
-        this.costumerID = costumerID;
+    public ReturnDTO(LocalDate date, List<Integer> items) {
         this.date = date;
         this.items = items;
-    }
-
-    public int getCostumerID() {
-        return costumerID;
     }
 
     public LocalDate getDate() {

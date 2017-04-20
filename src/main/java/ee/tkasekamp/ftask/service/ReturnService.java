@@ -32,14 +32,14 @@ public class ReturnService {
     public ReturnReceiptDTO returnFilms(ReturnDTO returnDTO) {
         List<ReturnReceiptItemDTO> items = new ArrayList<>();
         for (int filmID : returnDTO.getItems()) {
-            items.add(returnFilm(returnDTO.getCostumerID(), returnDTO.getDate(), filmID));
+            items.add(returnFilm(returnDTO.getDate(), filmID));
         }
 
         long total = items.stream().mapToLong(ReturnReceiptItemDTO::getPrice).sum();
         return new ReturnReceiptDTO(total, items);
     }
 
-    private ReturnReceiptItemDTO returnFilm(int costumerID, LocalDate returnDate, int filmID) {
+    private ReturnReceiptItemDTO returnFilm(LocalDate returnDate, int filmID) {
         Film film = filmService.getFilm(filmID);
         filmService.setAvailable(filmID, true);
 

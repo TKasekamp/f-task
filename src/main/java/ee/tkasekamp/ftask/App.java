@@ -62,7 +62,7 @@ public class App {
         System.out.println("RETURN FILM EARLY");
         System.out.println("----------");
 
-        ReturnDTO returnDTO = new ReturnDTO(0, LocalDate.of(2017, 4, 14), Arrays.asList(0));
+        ReturnDTO returnDTO = new ReturnDTO(LocalDate.of(2017, 4, 14), Arrays.asList(0));
 
         controller.returnFilms(returnDTO);
         System.out.println("----------");
@@ -72,7 +72,7 @@ public class App {
         System.out.println("RETURN FILM ON TIME");
         System.out.println("----------");
 
-        ReturnDTO returnDTO = new ReturnDTO(0, LocalDate.of(2017, 4, 15), Arrays.asList(1));
+        ReturnDTO returnDTO = new ReturnDTO(LocalDate.of(2017, 4, 15), Arrays.asList(1));
 
         controller.returnFilms(returnDTO);
         System.out.println("----------");
@@ -82,7 +82,7 @@ public class App {
         System.out.println("RETURN FILM LATE");
         System.out.println("----------");
 
-        ReturnDTO returnDTO = new ReturnDTO(0, LocalDate.of(2017, 4, 17), Arrays.asList(4));
+        ReturnDTO returnDTO = new ReturnDTO(LocalDate.of(2017, 4, 17), Arrays.asList(4));
 
         controller.returnFilms(returnDTO);
         System.out.println("----------");

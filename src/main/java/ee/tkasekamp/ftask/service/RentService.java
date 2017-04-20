@@ -8,6 +8,7 @@ import ee.tkasekamp.ftask.model.Film;
 import ee.tkasekamp.ftask.model.FilmType;
 import ee.tkasekamp.ftask.model.Rent;
 import ee.tkasekamp.ftask.repository.Repository;
+import ee.tkasekamp.ftask.service.dto.BonusCoverage;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

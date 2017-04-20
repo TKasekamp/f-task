@@ -1,4 +1,4 @@
-package ee.tkasekamp.ftask.service;
+package ee.tkasekamp.ftask.service.dto;
 
 /**
  * A DTO to return a pair of results.

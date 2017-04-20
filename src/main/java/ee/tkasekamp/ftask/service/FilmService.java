@@ -18,10 +18,6 @@ public class FilmService {
         return films;
     }
 
-    public void setFilms(List<Film> films) {
-        this.films = films;
-    }
-
     public List<Film> getAvailableFilms() {
         return films.stream().filter(film -> film.isAvailable()).collect(Collectors.toList());
     }

@@ -21,11 +21,6 @@ public class ReceiptDTO {
         return items;
     }
 
-    public void setItems(List<ReceiptItemDTO> items) {
-        this.items = items;
-    }
-
-
     public int getBonusPointsRemaining() {
         return bonusPointsRemaining;
     }
