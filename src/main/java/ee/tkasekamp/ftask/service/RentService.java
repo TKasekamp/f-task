@@ -19,14 +19,14 @@ import static java.time.temporal.ChronoUnit.DAYS;
 
 public class RentService {
     private static final int NEW_RELEASE_BONUS_COST = 25;
-    public final int BASIC_PRICE = 3;
-    public final int PREMIUM_PRICE = 4;
+    private static final int BASIC_PRICE = 3;
+    private static final int PREMIUM_PRICE = 4;
 
-    public final int REGULAR_PRICE_DAYS = 3;
-    public final int OLD_PRICE_DAYS = 5;
+    private static final int REGULAR_PRICE_DAYS = 3;
+    private static final int OLD_PRICE_DAYS = 5;
 
-    public final int NEW_RELEASE_BONUS_POINTS = 2;
-    public final int OTHER_BONUS_POINTS = 1;
+    private static final int NEW_RELEASE_BONUS_POINTS = 2;
+    private static final int OTHER_BONUS_POINTS = 1;
 
     private CostumerService costumerService;
     private FilmService filmService;
@@ -51,6 +51,13 @@ public class RentService {
         return new ReceiptDTO(total, bonusPointsRemaining, items);
     }
 
+    /**
+     * Find the film from repo and add the bonus points for that. Then calculate the price of the rent using bonus points.
+     *
+     * @param costumerID Person who rents
+     * @param dto        rent data
+     * @return Receipt of this rent
+     */
     public ReceiptItemDTO rentFilm(int costumerID, RentItemDTO dto) {
         Film film = filmService.getFilm(dto.getFilmID());
         filmService.setAvailable(dto.getFilmID(), false);
@@ -72,6 +79,25 @@ public class RentService {
         rents.add(rent);
 
         return new ReceiptItemDTO(film, payableDays, price, bonusPointsUsed);
+    }
+
+    public int calculatePrice(Film film, int days) {
+        FilmType type = film.getType();
+        int price = 0;
+        switch (type) {
+            case NEW_RELEASE:
+                price = PREMIUM_PRICE * days;
+                break;
+            case REGULAR:
+                price = calculateRegularPrice(days);
+                break;
+            case OLD:
+                price = calculateOldPrice(days);
+                break;
+
+        }
+        return price;
+
     }
 
     public Rent getRent(int filmID) {
@@ -97,24 +123,6 @@ public class RentService {
         return new BonusCoverage(bonusPointsUsed, days - daysCoveredByBonus);
     }
 
-    public int calculatePrice(Film film, int days) {
-        FilmType type = film.getType();
-        int price = 0;
-        switch (type) {
-            case NEW_RELEASE:
-                price = PREMIUM_PRICE * days;
-                break;
-            case REGULAR:
-                price = calculateRegularPrice(days);
-                break;
-            case OLD:
-                price = calculateOldPrice(days);
-                break;
-
-        }
-        return price;
-
-    }
 
     private int calculateRegularPrice(int days) {
         int price = BASIC_PRICE;
